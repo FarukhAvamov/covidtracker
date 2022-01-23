@@ -1,5 +1,6 @@
 package com.demo.covidtracker.controllers;
 
+import com.demo.covidtracker.models.LocationStats;
 import com.demo.covidtracker.services.CovidServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,8 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("locationStats", covidServices.getAllStats());
+        LocationStats randomStat = covidServices.randomStat();
+        model.addAttribute("locationStats", randomStat);
         return "home";
     }
 }

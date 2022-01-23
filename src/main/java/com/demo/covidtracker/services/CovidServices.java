@@ -7,7 +7,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.security.DeclareRoles;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.URI;
@@ -16,12 +15,14 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class CovidServices {
     private static String COVID_DATA_ULR = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 
     private List<LocationStats> allStats = new ArrayList<>();
+    private Random random = new Random();
 
     public List<LocationStats> getAllStats() {
         return allStats;
@@ -47,5 +48,9 @@ public class CovidServices {
             newStats.add(locationStat);
         }
         this.allStats = newStats;
+    }
+
+    public LocationStats randomStat() {
+        return allStats.get(random.nextInt(allStats.size() - 1));
     }
 }
